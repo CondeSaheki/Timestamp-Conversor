@@ -5,7 +5,7 @@ Also you can find and edit any time stamp using provided function based in ```st
 
 # Features and Usage
 
-1 - Converting any time stamp:
+1 - Convert any time stamp:
 ```
 //final_dur obj = convert_str_ts_in_duration<final_dur, ...other_dur>(const mystring&);
 //convert_str_ts_in_str_duration<final_dur, ...other_dur>(const mystring&);

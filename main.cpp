@@ -1,25 +1,15 @@
 #include "app.h"
 
-void example_app()
-{
-    my::log::benchmark bench_app(L"app start");
-    my::log::info("loading file");
-    mystring file = my::input_file(L"input.txt");
-    bench_app.now();
-    my::log::info("Regex edit");
-    app::regex_replace_edited(file, L"\"?[[:d:]]{2,}\:[[:d:]][[:d:]]\:[[:d:]][[:d:]]{2,}\"?",
-        [](mystring& str)
-        {
-            app::format_str(str);
-            app::convert_str_ts_in_str_duration <sch::milliseconds, sch::milliseconds, sch::seconds, sch::minutes>(str);
-        });
-    bench_app.now();
-    my::log::info("output file");
-    my::output_file(L"output.txt", file);
-    bench_app.now();
-}
-
 int main()
 {
-    example_app();
+    namespace sch = std::chrono;
+
+    auto file = ts_cnvr::input_file("input.txt");
+    ts_cnvr::regex_edit(file, "\"?[[:d:]]{2,}\:[[:d:]][[:d:]]\:[[:d:]][[:d:]]{2,}\"?",
+        [](ts_cnvr::mystring& str)
+        {
+            ts_cnvr::str_keep(str, " 0123456789.");
+            ts_cnvr::ts_cnvr_str<sch::milliseconds, sch::milliseconds, sch::seconds, sch::minutes>(str);
+        }); 
+    ts_cnvr::output_file(L"output.txt", file);
 }

@@ -3,8 +3,9 @@
 This is a simple library written in C++ that allows you to convert any string containing time stamp in a into ```std::chrono::duration``` object.
 Also you can edit any time stamp using provided function based in ```std::basic_regex```.
 
--> Features and Usage
-1 - Converting any time stamp
+#Features and Usage
+
+1 - Converting any time stamp:
 ```
 //final_dur obj = convert_str_ts_in_duration<final_dur, ...other_dur>(const mystring&);
 //convert_str_ts_in_str_duration<final_dur, ...other_dur>(const mystring&);
@@ -20,7 +21,7 @@ Notes:
 - First template argument is the target duration always
 - The other template argument are the timestamp format but in reverse order
 
-2 - Regex to find and edit any time stamp
+2 - Regex to find and edit any time stamp:
 ```
    //void regex_replace_edited(mystring& str, const mystring& rgx_str, void (*edit_lambda)(mystring& str));
 
@@ -33,13 +34,13 @@ Notes:
       });
 ```
 
-3 - Load an arbitrary file
+3 - Load arbitrary file:
 ```
 //_nodiscard mystring input_file(const sfs::path& file_path) noexcept
 mystring file = input_file("...");
 ```
 
-4 - save a file
+4 - Save file:
 ```
 //void output_file(const sfs::path& file_path, const mystring& str);
 mystring file = L"...";

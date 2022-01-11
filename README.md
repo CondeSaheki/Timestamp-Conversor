@@ -1,6 +1,6 @@
 # timestamp-conversion-in-an-arbitrary-file
 
-This is a simple library written in C++ that allows you to convert any string containing time stamp in a into ```std::chrono::duration``` object.
+This is a simple library written in C++ that allows you to convert any string containing time stamp into ```std::chrono::duration``` object.
 Also you can edit any time stamp using provided function based in ```std::basic_regex```.
 
 #Features and Usage

@@ -1,7 +1,6 @@
 # Timestamp Conversor
 
-This is a simple library written in C++ that allows you to convert any string containing time stamp into ```std::chrono::duration``` object.
-Also you can find and edit any time stamp using provided function based in ```std::basic_regex```.
+This is a simple library written in C++ that allows you to convert any string containing time stamp into ```std::chrono::duration``` object and it also have function based in ```std::basic_regex``` for you to find and edit them easily.
 
 # Installation
 Just add ```app.h``` and ```my.h``` in your project folder and include ```#include "app.h"```.

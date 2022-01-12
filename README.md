@@ -45,11 +45,11 @@ str_keep(string, string_of_caracters_to_keep);
 
 load a file
 ```
-string file = input_file<char_type>("...");
+string file = input_file<char_type>(file_path);
 ```
 save a file
 ```
-output_file<char_type>(L"...", file);
+output_file<char_type>(string, file_path);
 ```
 
 # take a look at  ```example_app.cpp``` for one more usage example 

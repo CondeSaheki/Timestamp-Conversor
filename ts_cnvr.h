@@ -22,67 +22,50 @@
 #define _nodiscard
 #endif
 
-namespace ts_cnvr
-{
-    // type redefinitions 
-    using mychar = char; // configurable for any file encoding
-
-    using myifstream = std::basic_ifstream<mychar, std::char_traits<mychar>>;
-    using myofstream = std::basic_ofstream<mychar, std::char_traits<mychar>>;
-    using myfstream = std::basic_fstream<mychar, std::char_traits<mychar>>;
-    using myistringstream = std::basic_istringstream<mychar, std::char_traits<mychar>>;
-    using myostringstream = std::basic_ostringstream<mychar, std::char_traits<mychar>>;
-    using mystringstream = std::basic_stringstream<mychar, std::char_traits<mychar>>;
-    using mystring = std::basic_string<mychar, std::char_traits<mychar>>;
-    //namespaces
-    namespace sfs = std::filesystem;
-    namespace sch = std::chrono;
-}
-
 /* STATIC FUNCTIONS */
 
-template<typename final_dur, typename dur>
-_nodiscard static inline constexpr final_dur func(ts_cnvr::mystringstream& ss) noexcept
+template<typename _Elem = char, typename final_dur, typename dur>
+_nodiscard static inline constexpr final_dur func(std::basic_stringstream<_Elem>& ss) noexcept
 {
     auto num = dur().count();
     if (!((ss) >> num))
     {
         (ss).clear();
-        my::log::error("error msg");
         return dur();
     }
     (ss).clear();
     return final_dur(dur(num));
 }
 
-template<typename final_dur, typename duration, typename duration2, typename... the_rest>
-    static inline constexpr final_dur func(ts_cnvr::mystringstream& ss) noexcept
+template<typename _Elem = char, typename final_dur, typename duration, typename duration2, typename... the_rest>
+    static inline constexpr final_dur func(std::basic_stringstream<_Elem>& ss) noexcept
 {
-    return func<final_dur, duration>(ss) + func<final_dur, duration2, the_rest...>(ss);
+    return func<_Elem, final_dur, duration>(ss) + func<_Elem, final_dur, duration2, the_rest...>(ss);
 }
 
 namespace ts_cnvr 
 {
-    
+    namespace sfs = std::filesystem;
+
     /* TS CNVR */
 
-    template<typename final_dur, typename duration, typename ...other_dur> 
-        _nodiscard constexpr final_dur ts_cnvr_dur(const mystring& str) noexcept
+    template<typename _Elem = char, typename final_dur, typename duration, typename ...other_dur>
+        _nodiscard constexpr final_dur ts_cnvr_dur(const std::basic_string<_Elem>& str) noexcept
     {
-        mystringstream ss(str);
+        std::basic_stringstream<_Elem> ss(str);
         // to do flip template parameters
         final_dur temp_duration(func<final_dur, duration, other_dur...>(ss));
         ss.clear();
         return temp_duration;
     }
 
-    template<typename final_dur, typename duration, typename ...other_dur> 
-        void ts_cnvr_str(mystring& str) noexcept
+    template<typename _Elem = char, typename final_dur, typename duration, typename ...other_dur>
+        void ts_cnvr_str(std::basic_string<_Elem>& str) noexcept
     {
-        mystringstream ss(str);
+        std::basic_stringstream<_Elem> ss(str);
         // to do flip template parameters
-        final_dur temp_duration(func<final_dur, duration, other_dur...>(ss));
-        ss.str(mystring());
+        final_dur temp_duration(func<_Elem, final_dur, duration, other_dur...>(ss));
+        ss.str(std::basic_string<_Elem>());
         ss.clear();
         ss << temp_duration.count();
         str.clear();
@@ -91,7 +74,8 @@ namespace ts_cnvr
 
     /* REGEX E STR EDIT */
 
-    void str_keep(mystring& str, const mystring& safe) noexcept
+    template<typename _Elem = char>
+        void str_keep(std::basic_string<_Elem>& str, const std::basic_string<_Elem>& safe) noexcept
     {
         bool ok;
         for (auto it = str.begin(); it != str.end(); ++it)
@@ -109,14 +93,16 @@ namespace ts_cnvr
         }
     }
 
-    void regex_edit(mystring& str, const mystring& rgx_str, void (*edit_lambda)(mystring& str)) noexcept
+    template<typename _Elem = char>
+        void regex_edit(std::basic_string<_Elem>& str, const std::basic_string<_Elem>& rgx_str, 
+            void(*edit_lambda)(std::basic_string<_Elem>& str)) noexcept
     {
-        const std::basic_regex<mychar> rgx(rgx_str);
+        const std::basic_regex<_Elem> rgx(rgx_str);
         if (!str.empty() && !rgx._Empty())
         {
-            mystring::iterator match_it = str.begin();
-            std::match_results<mystring::iterator> rgx_matchs;
-            mystring sub_str;
+            typename std::basic_string<_Elem>::iterator match_it = str.begin();
+            std::match_results<std::basic_string<_Elem>::iterator> rgx_matchs;
+            std::basic_string<_Elem> sub_str;
             while (std::regex_search(match_it, str.end(), rgx_matchs, rgx))
             {
                 sub_str = rgx_matchs.str();
@@ -130,11 +116,12 @@ namespace ts_cnvr
 
     /* INPUT E OUTPUT FILE */
 
-    _nodiscard mystring input_file(const sfs::path& file_path) noexcept
+    template<typename _Elem = char>
+        _nodiscard std::basic_string<_Elem> input_file(const sfs::path& file_path) noexcept
     {
-        mystring file;
-        myifstream fs;
-        mychar caracter = 0;
+        std::basic_string<_Elem> file;
+        std::basic_ifstream<_Elem> fs;
+        _Elem caracter = 0;
         std::streampos end;
         fs.open(file_path);
         if (fs.is_open())
@@ -168,9 +155,10 @@ namespace ts_cnvr
         return file;
     }
 
-    void output_file(const sfs::path& file_path, const mystring& str) noexcept
+    template<typename _Elem = char>
+        void output_file(const sfs::path& file_path, const std::basic_string<_Elem>& str) noexcept
     {
-        myofstream fs;
+        std::basic_ofstream<_Elem> fs;
         fs.open(file_path);
         if (fs.is_open())
         {

@@ -8,6 +8,7 @@ Just add ```ts_cnvr.h``` in your project folder and include it ```#include "ts_c
 # Features and Usage
 
 **1 - Conversors:**
+
 Timestamp string to ```std::chrono::duration``` object
 ```
 duration = ts_cnvr_dur<char_type, final_duration, ...other_durations>(string);
@@ -24,6 +25,7 @@ ts_cnvr_str<char_type, final_duration, ...other_durations>(string);
 - The other template parameter are the timestamp durations **in reverse order (for now)** 
 
 **2 - Regex and formating:**
+
 Find and edit all timestamps
 ```
 regex_edit<char_type>(file, regex, [](std::basic_string<char_type>& str) { /* code */});
@@ -40,6 +42,7 @@ str_keep(string, string_of_caracters_to_keep);
 ```
 
 **3 - Load and saving file:**
+
 load a file
 ```
 string file = input_file<char_type>("...");

@@ -51,3 +51,6 @@ save a file
 ```
 output_file<char_type>(L"...", file);
 ```
+
+# take a look at  ```example_app.cpp``` for one more usage example 
+

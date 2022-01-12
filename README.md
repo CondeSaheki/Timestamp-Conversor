@@ -52,5 +52,5 @@ save a file
 output_file<char_type>(string, file_path);
 ```
 
-# take a look at  ```example_app.cpp``` for one more usage example 
+**take a look at**  ```example_app.cpp``` **for one more usage example**
 

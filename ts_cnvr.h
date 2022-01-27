@@ -39,7 +39,7 @@ namespace ts_cnvr
     {
         std::basic_stringstream<_Elem> ss(str);
         // to do flip template parameters
-        final_dur temp_duration(func<final_dur, duration, other_dur...>(ss));
+        final_dur temp_duration(func<_Elem, final_dur, duration, other_dur...>(ss));
         ss.clear();
         return temp_duration;
     }
